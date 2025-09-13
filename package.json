@@ -1,0 +1,21 @@
+{
+  "name": "ad-blocking-proxy",
+  "version": "1.0.0",
+  "description": "A proxy server that blocks embedded URL ads and allows custom ad insertion",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js",
+    "test": "node test.js"
+  },
+  "keywords": ["proxy", "ad-blocker", "embed", "iframe", "vidsrc"],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2",
+    "http-proxy-middleware": "^2.0.6",
+    "cheerio": "^1.0.0-rc.12",
+    "axios": "^1.6.2",
+    "cors": "^2.8.5"
+  }
+}

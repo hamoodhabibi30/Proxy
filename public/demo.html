@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ad-Blocking Proxy Demo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        .demo-section {
+            margin-bottom: 30px;
+        }
+        .demo-section h2 {
+            color: #333;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 10px;
+        }
+        .iframe-container {
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+        iframe {
+            width: 100%;
+            height: 400px;
+            border: none;
+            display: block;
+        }
+        .url-display {
+            background: #f8f9fa;
+            padding: 10px;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 12px;
+            word-break: break-all;
+            margin: 5px 0;
+        }
+        .status {
+            padding: 10px;
+            border-radius: 4px;
+            margin: 10px 0;
+        }
+        .status.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .status.warning {
+            background: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeaa7;
+        }
+        .feature-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        .feature-item {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 6px;
+            border-left: 4px solid #667eea;
+        }
+        .test-urls {
+            background: #e3f2fd;
+            padding: 15px;
+            border-radius: 6px;
+            margin: 15px 0;
+        }
+        .test-urls h3 {
+            margin-top: 0;
+            color: #1565c0;
+        }
+        .test-url {
+            background: white;
+            padding: 8px 12px;
+            margin: 5px 0;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 11px;
+            border: 1px solid #bbdefb;
+            cursor: pointer;
+        }
+        .test-url:hover {
+            background: #f0f8ff;
+        }
+        .controls {
+            margin: 15px 0;
+        }
+        .btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+            font-size: 14px;
+        }
+        .btn:hover {
+            background: #5a67d8;
+        }
+        .btn.secondary {
+            background: #6c757d;
+        }
+        .btn.secondary:hover {
+            background: #5a6268;
+        }
+        code {
+            background: #f8f9fa;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚫 Ad-Blocking Proxy Demo</h1>
+        <p>This demonstration shows how the proxy blocks ads from embedded URLs and injects custom advertisements.</p>
+        
+        <div class="status success">
+            <strong>✅ Proxy Status:</strong> <span id="proxyStatus">Checking...</span>
+        </div>
+
+        <div class="feature-list">
+            <div class="feature-item">
+                <h4>🛡️ Ad Blocking</h4>
+                <p>Removes scripts, elements, and iframes containing advertisements</p>
+            </div>
+            <div class="feature-item">
+                <h4>🎯 Custom Ads</h4>
+                <p>Injects your own advertisement content in place of blocked ads</p>
+            </div>
+            <div class="feature-item">
+                <h4>🖼️ Iframe Ready</h4>
+                <p>Works seamlessly with iframe embeds and embed platforms</p>
+            </div>
+            <div class="feature-item">
+                <h4>⚡ Fast & Lightweight</h4>
+                <p>Built with Node.js for optimal performance and minimal latency</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="container demo-section">
+        <h2>🧪 Live Demo</h2>
+        <p>Test the proxy with different URLs. The proxy will remove ads and inject custom advertisements.</p>
+        
+        <div class="controls">
+            <input type="url" id="testUrl" placeholder="Enter a URL to test (e.g., https://example.com)" 
+                   style="width: 400px; padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
+            <button class="btn" onclick="loadProxiedUrl()">Load with Proxy</button>
+            <button class="btn secondary" onclick="loadDirectUrl()">Load Direct</button>
+            <button class="btn secondary" onclick="clearDemo()">Clear</button>
+        </div>
+
+        <div class="test-urls">
+            <h3>📋 Test URLs</h3>
+            <p>Try these sample URLs to see the proxy in action:</p>
+            <div class="test-url" onclick="setTestUrl('https://httpbin.org/html')">
+                https://httpbin.org/html - Simple HTML page for testing
+            </div>
+            <div class="test-url" onclick="setTestUrl('https://example.com')">
+                https://example.com - Basic example page
+            </div>
+        </div>
+
+        <div id="demoResults"></div>
+    </div>
+
+    <div class="container demo-section">
+        <h2>📖 How to Use</h2>
+        
+        <h3>Basic Usage</h3>
+        <div class="url-display">
+            GET http://localhost:3000/proxy?url=&lt;target_url&gt;
+        </div>
+
+        <h3>Iframe Integration</h3>
+        <div class="url-display">
+            &lt;iframe src="http://localhost:3000/proxy?url=https://vidsrc.example.com/embed/movie123"&gt;&lt;/iframe&gt;
+        </div>
+
+        <h3>API Usage</h3>
+        <div class="url-display">
+            const response = await fetch('http://localhost:3000/proxy?url=https://example.com/embed');<br>
+            const cleanContent = await response.text();
+        </div>
+    </div>
+
+    <div class="container demo-section">
+        <h2>🔧 Configuration</h2>
+        <p>The proxy can be configured via <code>config.json</code> to customize:</p>
+        <ul>
+            <li><strong>Ad Patterns:</strong> Domains and patterns to block</li>
+            <li><strong>Custom Ads:</strong> Your own advertisement HTML content</li>
+            <li><strong>Server Settings:</strong> Port, timeout, and other server options</li>
+        </ul>
+    </div>
+
+    <script>
+        // Check proxy status
+        async function checkProxyStatus() {
+            try {
+                const response = await fetch('/health');
+                const data = await response.json();
+                document.getElementById('proxyStatus').textContent = data.message;
+            } catch (error) {
+                document.getElementById('proxyStatus').textContent = 'Proxy server not running';
+                document.querySelector('.status').className = 'status warning';
+            }
+        }
+
+        // Set test URL
+        function setTestUrl(url) {
+            document.getElementById('testUrl').value = url;
+        }
+
+        // Load URL through proxy
+        function loadProxiedUrl() {
+            const url = document.getElementById('testUrl').value;
+            if (!url) {
+                alert('Please enter a URL to test');
+                return;
+            }
+            
+            const proxiedUrl = `/proxy?url=${encodeURIComponent(url)}`;
+            showResults('Proxied Content (Ads Blocked)', proxiedUrl, url);
+        }
+
+        // Load URL directly (note: this will likely fail due to CORS)
+        function loadDirectUrl() {
+            const url = document.getElementById('testUrl').value;
+            if (!url) {
+                alert('Please enter a URL to test');
+                return;
+            }
+            
+            alert('Direct loading may fail due to CORS restrictions. The proxy bypasses these restrictions.');
+            showResults('Direct Content (Original)', url, url);
+        }
+
+        // Show results
+        function showResults(title, iframeSrc, originalUrl) {
+            const resultsDiv = document.getElementById('demoResults');
+            resultsDiv.innerHTML = \`
+                <h3>\${title}</h3>
+                <div class="url-display">
+                    <strong>Original URL:</strong> \${originalUrl}<br>
+                    <strong>Iframe Source:</strong> \${iframeSrc}
+                </div>
+                <div class="iframe-container">
+                    <iframe src="\${iframeSrc}" title="\${title}"></iframe>
+                </div>
+            \`;
+        }
+
+        // Clear demo
+        function clearDemo() {
+            document.getElementById('demoResults').innerHTML = '';
+            document.getElementById('testUrl').value = '';
+        }
+
+        // Initialize
+        checkProxyStatus();
+    </script>
+</body>
+</html>

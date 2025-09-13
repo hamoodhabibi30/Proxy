@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Test Page with Ads</title>
+  <!-- These ad scripts should be removed by the proxy -->
+  <script src="https://googleads.g.doubleclick.net/tag/js/gpt.js"></script>
+  <script src="https://securepubads.g.doubleclick.net/ads.js"></script>
+  <script src="https://adsystem.com/ads.js"></script>
+</head>
+<body>
+  <h1>Sample Content Page</h1>
+  <p>This is the main content that should remain visible.</p>
+  
+  <!-- These ad elements should be removed -->
+  <div class="ad-banner" style="background: red; color: white; padding: 20px; margin: 10px 0;">
+    🚫 THIS IS AN AD BANNER - SHOULD BE REMOVED
+  </div>
+  
+  <div id="ads" style="background: orange; color: white; padding: 15px; margin: 10px 0;">
+    🚫 THIS IS AN AD CONTAINER - SHOULD BE REMOVED
+  </div>
+  
+  <p>More main content here. This paragraph should be visible.</p>
+  
+  <!-- This iframe ad should be removed -->
+  <iframe src="https://googleads.g.doubleclick.net/ad" style="width: 100%; height: 200px; background: yellow;">
+    🚫 AD IFRAME - SHOULD BE REMOVED
+  </iframe>
+  
+  <p>Final content paragraph that should remain.</p>
+  
+  <!-- This ad script should be removed -->
+  <script>
+    // This is an ad script that should be removed
+    console.log('Loading advertisements...');
+    var ads = true;
+    function loadAdvertisement() {
+      console.log('Advertisement loaded');
+    }
+    loadAdvertisement();
+  </script>
+  
+  <!-- This normal script should remain -->
+  <script>
+    console.log('Normal script - should remain');
+    function normalFunction() {
+      console.log('This is normal functionality');
+    }
+  </script>
+  
+  <div style="background: lightblue; padding: 15px; margin: 10px 0;">
+    ✅ This is normal content and should remain visible
+  </div>
+</body>
+</html>

@@ -1,0 +1,61 @@
+{
+  "adPatterns": [
+    "googleads.g.doubleclick.net",
+    "googlesyndication.com",
+    "googleadservices.com",
+    "amazon-adsystem.com",
+    "facebook.com/tr",
+    "outbrain.com",
+    "taboola.com",
+    "adsystem.com",
+    "ads.yahoo.com",
+    "advertising.com",
+    "adsnative.com",
+    "ima3.googlesyndication.com",
+    "imasdk.googleapis.com",
+    "securepubads.g.doubleclick.net",
+    "video-ad-stats.googlesyndication.com",
+    "vidsrc",
+    "ads.js",
+    "advertising",
+    "popunder",
+    "popup",
+    "adnxs.com",
+    "adskeeper.co.uk"
+  ],
+  "scriptPatterns": [
+    "ads?[_\\-.].*\\.js",
+    "advertisement",
+    "google.*ads",
+    "doubleclick",
+    "adsystem",
+    "popunder",
+    "popup.*ad"
+  ],
+  "selectors": [
+    "[class*=\"ad\"]",
+    "[id*=\"ad\"]",
+    "[class*=\"advertisement\"]",
+    "[id*=\"advertisement\"]",
+    ".ads",
+    "#ads",
+    ".adblock",
+    ".ad-container",
+    ".ad-banner",
+    ".popup",
+    ".popunder",
+    "iframe[src*=\"ads\"]",
+    "iframe[src*=\"doubleclick\"]",
+    "iframe[src*=\"googlesyndication\"]"
+  ],
+  "customAd": {
+    "enabled": true,
+    "html": "<div style=\"background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 20px; margin: 10px 0; border-radius: 8px; text-align: center; font-family: Arial, sans-serif;\"><h3 style=\"margin: 0 0 10px 0;\">Custom Ad Space</h3><p style=\"margin: 0; opacity: 0.9;\">Your advertisement could be here!</p><small style=\"opacity: 0.7;\">Powered by Ad-Blocking Proxy</small></div>",
+    "position": "top"
+  },
+  "server": {
+    "port": 3000,
+    "timeout": 10000,
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
+  }
+}
